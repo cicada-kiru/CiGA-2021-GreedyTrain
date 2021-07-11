@@ -27,14 +27,29 @@ public class TrainSpring : MonoBehaviour
             line.SetPosition(0, node.head.position);
             line.SetPosition(1, player.transform.position);
         }
-        else line.enabled = false;
+        else
+        {
+            line.enabled = false;
+        }
     }
 
     public void ConnectToNode(TrainNode other)
     {
-        this.other = other;
+        if (other)
+        {
+            this.other = other;
+            player = null;
+            line.enabled = true;
+            if (node) node.head.GetComponent<SpriteRenderer>().enabled = true;
+            other.tail.GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }
+    
+    public void ConnectToPlayer(Player player)
+    {
+        this.player = player;
         line.enabled = true;
-        node.head.GetComponent<SpriteRenderer>().enabled = true;
-        other.tail.GetComponent<SpriteRenderer>().enabled = true;
+        other = null;
+        if (node) node.head.GetComponent<SpriteRenderer>().enabled = true;
     }
 }
